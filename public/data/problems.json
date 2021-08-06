@@ -1,0 +1,59 @@
+{
+    "_data": [
+        {
+            "guid": "123456789",
+            "title": "Two Sum",
+            "submissions": {
+                "total": "4975",
+                "accepted": "1876"
+            },
+            "difficulty": "easy",
+            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
+            "stats": {
+                "peopleSolved": ["12345", "12346", "12347"],
+                "starredBy": ["12345", "12346", "12347"]
+            },
+            "initialCode": "/*** Definition for singly-linked list.\n* struct ListNode {\n*     int val;\n*     ListNode *next;\n*     ListNode() : val(0), next(nullptr) {}\n*     ListNode(int x) : val(x), next(nullptr) {}\n*     ListNode(int x, ListNode *next) : val(x), next(next) {}\n* };\n*/\nclass Solution {\npublic:\n   ListNode* removeNthFromEnd(ListNode* head, int n) {\n       \n   }\n;"
+            
+        },
+        {
+            "guid": "125456789",
+            "title": "Two Sumy",
+            "submissions": {
+                "total": "4975",
+                "accepted": "1876"
+            },
+            "difficulty": "medium",
+            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
+            "stats": {
+                "peopleSolved": ["12345", "12346", "12347"]
+            }
+        },
+        {
+            "guid": "123476789",
+            "title": "Two Sumw",
+            "submissions": {
+                "total": "4975",
+                "accepted": "1876"
+            },
+            "difficulty": "hard",
+            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
+            "stats": {
+                "peopleSolved": ["12345", "12346", "12347"]
+            }
+        },
+        {
+            "guid": "123456189",
+            "title": "Two Sume",
+            "submissions": {
+                "total": "4975",
+                "accepted": "1876"
+            },
+            "difficulty": "easy",
+            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
+            "stats": {
+                "peopleSolved": ["12345", "12346", "12347"]
+            }
+        }
+    ]
+}

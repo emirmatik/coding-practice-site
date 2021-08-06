@@ -1,0 +1,31 @@
+.nav {
+    border-bottom: 1px solid var(--gray);
+    
+    nav {
+        display: flex;
+        width: 80%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+
+        .nav-link {
+            color: black;
+            text-decoration: none;
+            margin-right: 1rem;
+            padding: 0;
+            transition: .2s ease;
+
+            &.current {
+                color: var(--blue);
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &:hover {
+                color: var(--blue);
+            }
+        }
+    }
+}
