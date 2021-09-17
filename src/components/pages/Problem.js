@@ -1,76 +1,120 @@
 import React, { Component, Fragment } from 'react'
-import { get } from '../common/Utilities';
-import Editor from 'react-simple-code-editor';
+import { get, handleProblemSubmission } from '../common/Utilities';
+
+import Iblize from "iblize";
+import { CheckCircle, xCircle } from '../parts/Icons';
 
 export default class Problem extends Component {
     
     constructor(props) {
         super(props);
 
-        const { pathname, state } = this.props.location;
+        const { state } = this.props.location;
 
         this.state = {
             problemData: state,
+            isAccepted: null,
             isLoading: false,  
-            rows: new Array(10).fill(0),
-            code: `function add(a, b) {
-                return a + b;
-              }
-              `,
+            results: [],
+            editor: null,
         }
 
         if (state === undefined) {
             this.state.isLoading = true;
+
             get('/data/problems.json', 'problems', (_k, res) => {
                 const problemData = res._data.find(problem => problem.title === this.props.match.params.problem_title);
-                console.log(problemData);
 
                 this.setState({problemData, isLoading: false});
             })
         }
+    };
+
+    componentDidMount = () => {
+        const iblize = new Iblize(".editor", {
+            theme: 'iblize-light'
+        });
+
+        this.setState({ editor: iblize })
+
+        iblize.setValue(this.state.problemData.initialCode);
+    };
+
+    onSubmit = e => {
+        e.preventDefault();
+
+        const { problemData, editor } = this.state;
+
+        const val = editor.getValue();
+        this.setState({ isAccepted: null, results: null }, async () => {
+            const { isAccepted, results } = await handleProblemSubmission(val, problemData.title);
+    
+            this.setState({ isAccepted, results });
+        });
+    };
+
+    getClassName = (isAccepted = this.state.isAccepted) => {
+        let className = "problem-inner";
+
+        switch(isAccepted) {
+            case true:
+                className += ' accepted';
+                break;
+            
+            case false:
+                className += ' not-accepted';
+                break;
+
+            default:
+                break;
+        }
+
+        return className;
     }
 
-    onPress = (e, rowIndex) => {
-        switch(e.key.toLowerCase()) {
-            case 'enter':
-                const { rows } = this.state;
-                rows.splice(rowIndex, 0, 'hey');
-                this.setState({ rows })
-                console.log("hehe");
-        }
-    }
+    renderIcon = isAccepted => isAccepted
+        ? CheckCircle
+        : xCircle;
+
+    renderResults = (results = this.state.results) => (
+        results.length > 0 &&
+            <div className="problem-results">
+                <div>Result</div>
+                <div className="problem-results-inner">
+                    {results.map(({ isValid, error }, resultIndex) => (
+                        <div key={resultIndex} className={`problem-result ${isValid ? 'accepted' : 'not-accepted'}`}>
+                            {this.renderIcon(isValid)(18, 18)} 
+                            <div className="problem-result-testcase ml-2">Test case #{resultIndex}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>        
+    );
     
     render() {
-        const { problemData, isLoading, rows } = this.state;
+        const { problemData, isLoading, results } = this.state;
 
-        console.log(rows);
+        const className = this.getClassName();
 
         return (
-            <div>
+            <div className="problem">
                 {isLoading ? 
                     'loading...'
                 :
-                    <Fragment>
+                    <div className={className}>
                         <h3>{problemData.title}</h3>
                         <div className="mt-3">
                             {problemData.description}
                         </div>
-                        <div className="editor">
-                            <div className="indexes">
-                                {rows.map((row, rowIndex) => (
-                                    <span key={rowIndex}>{rowIndex + 1}</span>
-                                ))}
-                            </div>
-                            <div className="rows">
-                                {rows.map((row, rowIndex) => (
-                                    <div key={rowIndex} className="row">
-                                        {/* <span>{rowIndex + 1}</span> */}
-                                        <input onKeyDown={this.onPress} defaultValue="code will be here" />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </Fragment>
+                        <div className="editor mt-3"></div>
+                        <button className="btn btn-primary mt-2" onClick={this.onSubmit}>Submit</button>
+                        {results === null ?
+                        
+                            'Fetching results..'
+                        :
+                            this.renderResults()
+                        }
+                    </div>
                 }
             </div>
         )

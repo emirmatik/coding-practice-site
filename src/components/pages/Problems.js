@@ -34,6 +34,6 @@ export default class Problems extends PureComponent {
                     />
                 }
             </div>
-        )
+        );
     }
 }

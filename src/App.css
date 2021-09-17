@@ -11,8 +11,10 @@ body {
 }
 
 :root {
+    --red: rgb(209, 35, 35);
     --blue: #007bff;
     --gray: rgb(241, 241, 241);
+    --green: rgb(16, 129, 16);
     --dark-gray: rgb(160, 160, 160);
 }
 

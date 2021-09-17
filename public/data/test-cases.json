@@ -3,32 +3,37 @@
         {
             "guid": "123456789",
             "title": "Two Sum",
-            "submissions": {
-                "total": "4975",
-                "accepted": "1876"
-            },
-            "difficulty": "easy",
-            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
-            "stats": {
-                "peopleSolved": ["12345", "12346", "12347"],
-                "starredBy": ["12345", "12346", "12347"]
-            },
-            "initialCode": "const add = (a, b) => {\n    \n}"
-            
+            "functionName": "add",
+            "solution": "function add(a, b) { return a + b; }",
+            "testCases": [
+                [1, 6],
+                [12, 24],
+                [1241, 1251],
+                [6412, 1761],
+                [89798, 22112],
+                [645132, 31761],
+                [6448, 11761],
+                [641, 1321761],
+                [641122, 1712361],
+                [64551212, 2131761],
+                [641552, 3127361],
+                [614512, 1221761],
+                [2236412, 124761]
+            ]
         },
         {
             "guid": "125456789",
             "title": "Total Sum",
-            "submissions": {
-                "total": "4975",
-                "accepted": "1876"
-            },
-            "difficulty": "medium",
-            "description": "Given an array of integers nums and return total sum of the elements",
-            "stats": {
-                "peopleSolved": ["12345", "12346", "12347"]
-            },
-            "initialCode": "const total = array => {\n    \n}"
+            "functionName": "total",
+            "solution": "function total(array) { return array.reduce((a, b) => a + b); }",
+            "testCases": [
+                [[1, 2, 3, 4]],
+                [[1, 2, 3, 1241]],
+                [[64551212, 2131761]],
+                [[641552, 3127361]],
+                [[1614512, 12, 124124, 2151, 5215, 52121, 1221761]],
+                [[2236412, 124761]]
+            ]
         },
         {
             "guid": "123476789",
