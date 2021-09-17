@@ -29,32 +29,6 @@
                 "peopleSolved": ["12345", "12346", "12347"]
             },
             "initialCode": "const total = array => {\n    \n}"
-        },
-        {
-            "guid": "123476789",
-            "title": "Two Sumw",
-            "submissions": {
-                "total": "4975",
-                "accepted": "1876"
-            },
-            "difficulty": "hard",
-            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
-            "stats": {
-                "peopleSolved": ["12345", "12346", "12347"]
-            }
-        },
-        {
-            "guid": "123456189",
-            "title": "Two Sume",
-            "submissions": {
-                "total": "4975",
-                "accepted": "1876"
-            },
-            "difficulty": "easy",
-            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
-            "stats": {
-                "peopleSolved": ["12345", "12346", "12347"]
-            }
         }
     ]
 }
