@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 
 import { get } from '../common/Utilities';
 import Table from '../parts/Table';
@@ -13,8 +13,11 @@ export default class Problems extends PureComponent {
     }
 
     componentDidMount = () => {
-        get('/data/problems.json', "problems", (_k, res) => {
-            this.setState({ problems: res._data, isLoading: false });
+        get('http://localhost:5000/problem', "problems", (_k, res) => {
+            this.setState({ 
+                problems: res, 
+                isLoading: false 
+            });
         });
     }
 
@@ -22,16 +25,18 @@ export default class Problems extends PureComponent {
         const { problems, isLoading } = this.state;
 
         return (
-            <div>
-                Problems
+            <div className="problems">
                 {isLoading ? 
                     'loading...'
                 :
-                    <Table 
-                        headers={["title", "acceptance", "difficulty"]}
-                        data={problems}
-                        className="mt-3"
-                    />
+                    <Fragment>
+                        {/* TODO: FILTERS */}
+                        <Table 
+                            headers={["title", "acceptance", "difficulty"]}
+                            data={problems}
+                            className="mt-3"
+                        />
+                    </Fragment>
                 }
             </div>
         );

@@ -1,43 +1,56 @@
-import React, { Component, Fragment } from 'react'
-import { get, handleProblemSubmission } from '../common/Utilities';
-
+import React, { PureComponent } from 'react'
 import Iblize from "iblize";
+
 import { CheckCircle, xCircle } from '../parts/Icons';
 
-export default class Problem extends Component {
+import { post, get } from '../common/Utilities';
+
+export default class Problem extends PureComponent {
     
-    constructor(props) {
-        super(props);
+    state = {
+        isLoadingSubmission: false,
+        submissionError: null,
+        problemData: null,
+        isAccepted: null,
+        isLoadingInitial: true,  
+        results: [],
+        editor: null,
+    }
 
+    componentDidMount() {
         const { state } = this.props.location;
-
-        this.state = {
-            problemData: state,
-            isAccepted: null,
-            isLoading: false,  
-            results: [],
-            editor: null,
-        }
-
+        
         if (state === undefined) {
-            this.state.isLoading = true;
+            get('http://localhost:5000/problem', 'problems', (_k, res) => {
+                const problemData = res.find(problem => problem.title === this.props.match.params.problem_title);
 
-            get('/data/problems.json', 'problems', (_k, res) => {
-                const problemData = res._data.find(problem => problem.title === this.props.match.params.problem_title);
-
-                this.setState({problemData, isLoading: false});
+                this.setState({
+                    problemData,
+                    isLoadingInitial: false,
+                }, () => {
+                    const iblize = new Iblize(".editor", {
+                        theme: 'iblize-light'
+                    });
+            
+                    this.setState({ editor: iblize });
+            
+                    iblize.setValue(this.state.problemData.initialCode);
+                });
             })
+        } else {
+            this.setState({ 
+                problemData: state,
+                isLoadingInitial: false
+            }, () => {
+                const iblize = new Iblize(".editor", {
+                    theme: 'iblize-light'
+                });
+        
+                this.setState({ editor: iblize });
+        
+                iblize.setValue(this.state.problemData.initialCode);
+            });
         }
-    };
-
-    componentDidMount = () => {
-        const iblize = new Iblize(".editor", {
-            theme: 'iblize-light'
-        });
-
-        this.setState({ editor: iblize })
-
-        iblize.setValue(this.state.problemData.initialCode);
     };
 
     onSubmit = e => {
@@ -46,10 +59,26 @@ export default class Problem extends Component {
         const { problemData, editor } = this.state;
 
         const val = editor.getValue();
-        this.setState({ isAccepted: null, results: null }, async () => {
-            const { isAccepted, results } = await handleProblemSubmission(val, problemData.title);
-    
-            this.setState({ isAccepted, results });
+        this.setState({ 
+            isLoadingSubmission: true, 
+            isAccepted: null, 
+            results: [] 
+        }, async () => {
+            let submissionError = null;
+            const res = await post('http://localhost:5000/problem/submission', null, {submission: val, problemTitle: problemData.title});
+            
+            const { isAccepted, results } = res;
+
+            if (res.err) {
+                submissionError = res.err;
+            } 
+
+            this.setState({ 
+                isLoadingSubmission: false,
+                submissionError,
+                isAccepted,
+                results
+            });
         });
     };
 
@@ -92,13 +121,13 @@ export default class Problem extends Component {
     );
     
     render() {
-        const { problemData, isLoading, results } = this.state;
+        const { isLoadingSubmission, isLoadingInitial, problemData } = this.state;
 
         const className = this.getClassName();
 
         return (
             <div className="problem">
-                {isLoading ? 
+                {isLoadingInitial ? 
                     'loading...'
                 :
                     <div className={className}>
@@ -108,8 +137,7 @@ export default class Problem extends Component {
                         </div>
                         <div className="editor mt-3"></div>
                         <button className="btn btn-primary mt-2" onClick={this.onSubmit}>Submit</button>
-                        {results === null ?
-                        
+                        {isLoadingSubmission ?
                             'Fetching results..'
                         :
                             this.renderResults()
@@ -117,6 +145,6 @@ export default class Problem extends Component {
                     </div>
                 }
             </div>
-        )
+        );
     }
 }

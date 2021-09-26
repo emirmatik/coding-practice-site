@@ -1,8 +1,7 @@
 import React from 'react';
-import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Problems from './components/pages/Problems';
-import Wrapper from './components/parts/Wrapper';
 import Problem from './components/pages/Problem';
 import Navbar from './components/parts/Navbar';
 import Error from './components/pages/Error';
@@ -15,7 +14,7 @@ function App() {
   return (
     <div>
         <Navbar />
-        <Wrapper>
+        <div className="container">
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/problems" component={Problems} />
@@ -23,7 +22,7 @@ function App() {
                 <Route exact path="/404" component={Error} />
                 <Redirect to="/404" />
             </Switch>
-        </Wrapper>
+        </div>
     </div>
   );
 }

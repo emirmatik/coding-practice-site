@@ -16,7 +16,7 @@ export default function Table(props) {
                     <td key={key}>
                         <a className={className} onClick={() => history.push(`/problems/${problem[title]}`, problem)}>{problem[title]}</a>
                     </td>
-                )
+                );
 
             
             case 'acceptance':
@@ -25,35 +25,33 @@ export default function Table(props) {
                     <td key={key}>
                         {(accepted / total * 100).toFixed(2)}%
                     </td>
-                )
-
-
+                );
 
             case 'difficulty':
                 className += ` ${problem[title]}`;
         }
 
-        return <td key={key} className={className}>{problem[title]}</td>
+        return <td key={key} className={className}>{problem[title]}</td>;
     }
 
     return (
         <table className={props.className}>
             <thead>
                 <tr>
-                    {props.headers.map((head, headId) => 
-                        <td key={`${head}_${headId}`}>{head}</td>    
+                    {props.headers.map((head, headIndex) => 
+                        <td key={`${head}_${headIndex}`}>{head}</td>    
                     )}
                 </tr>
             </thead>
             <tbody>
-                {props.data.map((problem, problemId) => 
-                    <tr key={`${problem.title}_${problemId}`}>
+                {props.data.map((problem, problemIndex) => 
+                    <tr key={`${problem.title}_${problemIndex}`}>
                         {props.headers.map((title, titleIndex) => renderCell(title, titleIndex, problem))}
                     </tr>    
                 )}
             </tbody>
         </table>
-    )
+    );
 }
 
 Table.propTypes = {

@@ -1,11 +1,16 @@
 table {
     width: 100%;
-    // border: 1px solid gray;
+    border: 1px solid var(--gray);
     border-collapse: collapse;
     border-radius: .5rem;
 
     thead tr {
+        font-weight: 600;
         border-bottom: 1px solid var(--gray);
+    }
+
+    tbody tr td:first-child {
+        font-weight: 500;
     }
 
     tr {
@@ -25,7 +30,7 @@ table {
         transition: .2s;
 
         &:hover {
-            color: #007bff !important;
+            color: #3179c5 !important;
         }
     }
 
