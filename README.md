@@ -11,4 +11,4 @@
 - Support more programming languages
 - Support mobile(?)
 
-![Current state](https://i.ibb.co/4mpQvr2/problem-solving-site.png)
+![Current state](https://i.ibb.co/C2Wjrcc/Capture.png)
